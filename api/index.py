@@ -18,7 +18,7 @@ DOCS_HTML = """
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sanatan Mobile Info v2 API Docs</title>
+    <title>Sanatan Info API Docs</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
@@ -50,13 +50,11 @@ DOCS_HTML = """
 
         <div class="card">
             <h2>🌐 API Endpoint</h2>
-            <p>Apni kisi bhi website ya mobile app mein live raw data fetch karne ke liye niche diye gaye GET endpoint par request bhejein:</p>
             <span class="endpoint"><span class="method">GET</span>https://{{ host }}/api/lookup?query=NUMBER&amp;apikey=YOUR_KEY</span>
         </div>
 
         <div class="card">
             <h2>📋 Request Parameters</h2>
-            <p>API Call karte samay URL ke andar yeh dono parameters dena compulsory hai:</p>
             <table>
                 <thead>
                     <tr>
@@ -85,7 +83,6 @@ DOCS_HTML = """
 
         <div class="card">
             <h2>⚡ Integration Example (JavaScript Fetch)</h2>
-            <p>Apne kisi bhi custom HTML dashboard ya website button ke click par data display karne ke liye is code ka use karein:</p>
             <div class="code-block"><pre>
 const number = "1234567890";
 const apiKey = "YOUR_API_KEY_HERE"; // Put your secret key here
