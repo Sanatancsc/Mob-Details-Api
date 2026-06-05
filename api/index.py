@@ -101,7 +101,7 @@ fetch(url)
         </div>
 
         <div class="footer">
-            © 2026 Sanatan CSC Center. All Rights Reserved. Master Secure Gateway Network.
+            © 2026 Sanatan Super Info. All Rights Reserved. Master Secure Gateway Network.
         </div>
     </div>
 </body>
