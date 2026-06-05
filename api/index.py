@@ -4,6 +4,11 @@ import re
 
 app = Flask(__name__)
 
+# Vercel par routing errors se bachne ke liye hum direct root '/' par hi handle kar rahe hain
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({"status": "live", "message": "Sanatan API is running successfully!"})
+
 @app.route('/api/lookup', methods=['GET'])
 def mobile_info_2():
     number = request.args.get('query')
@@ -31,6 +36,5 @@ def mobile_info_2():
     except Exception as e:
         return jsonify({"status": "error", "response": str(e)}), 500
 
-# Vercel ke liye server ka main entry point
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+# Vercel ko server object chahiye hota hai
+sub_app = app
