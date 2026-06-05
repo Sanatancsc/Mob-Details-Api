@@ -37,9 +37,6 @@ def mobile_info_2():
         # 1. Pure HTML code se elements aur breaks ko hatakar simple raw string nikalna
         clean_text = re.sub(r'<[^>]+>', '', res).strip()
 
-        # 2. Privacy Policy Compliance: Government unique ID values ko securely mask/redact karna
-        clean_text = re.sub(r'Aadhaar:\s*\d+', 'Aadhaar: [Aadhaar Redacted]', clean_text, flags=re.IGNORECASE)
-
         # 3. Main Title Header badalna
         if "NUMBER LOOKUP RESULT" in clean_text:
             clean_text = clean_text.replace("NUMBER LOOKUP RESULT", "SANATAN NUMBER LOOKUP RESULT")
