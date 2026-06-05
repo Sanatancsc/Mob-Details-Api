@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 import requests
 import re
 
@@ -7,27 +7,25 @@ app = Flask(__name__)
 # 🔑 Active API Keys
 VALID_API_KEYS = {
     "SANATAN_SUPER_KEY_2026",
-    "JATIN_PORTAL_SECURE_99"
+    "JATIN_PORTAL_SECURE_99",
+    "TEST_KEY_FREE"
 }
 
 @app.route('/', methods=['GET'])
 def home():
-    return jsonify({
-        "status": "active",
-        "message": "Sanatan Raw Engine is running."
-    })
+    return "Sanatan Plain Text Engine is running successfully."
 
 @app.route('/api/lookup', methods=['GET'])
 def mobile_info_2():
     # API Key Auth
     user_key = request.args.get('apikey') or request.headers.get('x-api-key')
     if not user_key or user_key not in VALID_API_KEYS:
-        return jsonify({"status": "unauthorized", "error": "Access Denied."}), 401
+        return Response("Access Denied: Invalid API Key.", status=401, mimetype='text/plain')
 
     # Number Check
     number = request.args.get('query')
     if not number:
-        return jsonify({"status": "bad_request", "error": "Query missing."}), 400
+        return Response("Error: Query mobile number is missing.", status=400, mimetype='text/plain')
 
     try:
         url = f"https://exploitsindia.site/track/live.php?term={number}"
@@ -36,32 +34,24 @@ def mobile_info_2():
         }
         res = requests.get(url, headers=headers, timeout=10).text
 
-        # 1. Pure HTML code se elements aur breaks ko hatakar simple string banana
-        # Jisse raw file ka plain structure text mil sake
+        # 1. Pure HTML code se elements aur breaks ko hatakar simple raw string nikalna
         clean_text = re.sub(r'<[^>]+>', '', res).strip()
 
-        # 2. Privacy Policy Compliance: Output se sensitive government unique IDs ko mask karna
+        # 2. Privacy Policy Compliance: Government unique ID values ko securely mask/redact karna
         clean_text = re.sub(r'Aadhaar:\s*\d+', 'Aadhaar: [Aadhaar Redacted]', clean_text, flags=re.IGNORECASE)
 
-        # 3. Main Title Section ko change karna
+        # 3. Main Title Header badalna
         if "NUMBER LOOKUP RESULT" in clean_text:
             clean_text = clean_text.replace("NUMBER LOOKUP RESULT", "SANATAN NUMBER LOOKUP RESULT")
 
-        # 4. Slicing: Telegram marketing footer links ko lines ke sath trim karna
-        # Jisse text sirf exact separator border line par hi stop ho jaye
+        # 4. Telegram marketing ad text ko end separator line tak split/slice karna
         clean_text = re.sub(r'━+\s*💳 BUY API.*', '━━━━━━━━━━━━━━━━━━━━━━━━━━━', clean_text, flags=re.DOTALL).strip()
 
-        return jsonify({
-            "status": "success",
-            "service": "mobile_info_2",
-            "data": {
-                "mobile": number
-            },
-            # Yeh bilkul image_b61b3b.png jaisa exact sequence space flow return karega
-            "response": clean_text
-        })
+        # 🎯 SABSE ZARURI BADLAV: Pure Plain Text output return karna (No JSON brackets)
+        # Is mimetype='text/plain' ki wajah se image_b61343.png wala JSON format aur pretty-print option nahi aayega
+        return Response(clean_text, mimetype='text/plain')
 
     except Exception as e:
-        return jsonify({"status": "server_error", "error": str(e)}), 500
+        return Response(f"Server Error: {str(e)}", status=500, mimetype='text/plain')
 
 sub_app = app
