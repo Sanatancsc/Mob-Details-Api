@@ -89,10 +89,10 @@ const apiKey = "YOUR_API_KEY_HERE"; // Put your secret key here
 const url = `https://{{ host }}/api/lookup?query=${number}&apikey=${apiKey}`;
 
 fetch(url)
-  .then(response => response.text()) // .text() use karein kyunki output plain text hai
+  .then(response => response.text()) // Use .text() Mandatory
   .then(rawData => {
       console.log(rawData);
-      // Iframe ya pre-tag ke andar rawData ko direct display karein
+      // Show Data in Iframe OR pre-tag
   })
   .catch(error => console.error("Error fetching data:", error));</pre></div>
         </div>
