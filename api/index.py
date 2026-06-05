@@ -44,7 +44,7 @@ DOCS_HTML = """
 <body>
     <div class="container">
         <header>
-            <h1>Sanatan Super Info API</h1>
+            <h1>Sanatan Info API</h1>
             <div class="subtitle">Official Documentation for Developers & Portal Integration</div>
         </header>
 
